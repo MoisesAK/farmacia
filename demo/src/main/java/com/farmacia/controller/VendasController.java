@@ -49,8 +49,7 @@ public class VendasController {
             @ApiResponse(responseCode = "200", description = "Venda encontrada", content = @Content(mediaType = "application/json", schema = @Schema(implementation = VendaEntity.class)))
     })
     @GetMapping()
-    public List<VendaEntity> relatorioDeVendas(@RequestParam LocalDate dataInicio,
-                                         @RequestParam LocalDate dataFim) {
-        return service.relatorioDeVendas(dataInicio, dataFim);
+    public List<VendaEntity> relatorioDeVendas() {
+        return service.relatorioDeVendas();
     }
 }

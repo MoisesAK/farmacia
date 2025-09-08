@@ -116,7 +116,7 @@ public class VendaService {
     }
 
 
-    public List<VendaEntity> relatorioDeVendas(LocalDate dataInicio, LocalDate dataFim) {
+    public List<VendaEntity> relatorioDeVendas() {
         return repository.findAll();
     }
 }
