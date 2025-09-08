@@ -27,7 +27,7 @@ public class ClienteController {
 
     })
     @PostMapping()
-    ClientEntity gravaCliente(ClienteDTO clienteDTO) {
+    ClientEntity gravaCliente(@RequestBody ClienteDTO clienteDTO) {
         return service.gravaCliente(clienteDTO);
     }
 

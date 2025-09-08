@@ -42,7 +42,6 @@ public class VendaService {
 
         produtoService.atualizaEstoque(produtosRecalculados);
 
-
         return repository.save(VendaEntity.buildVendaEntity(total, vendaDTO, produtosRecalculados));
     }
 
@@ -52,11 +51,31 @@ public class VendaService {
                 .orElse(1 + vendaDTO.imposto());
     }
 
+    private static List<ProdutoCalculado> getProdutosRecalculados(VendaDTO vendaDTO, List<ProdutoEntity> produtos, Double impostoEMargem) {
+
+        return produtos.stream()
+                .filter(Objects::nonNull)
+                .map(p -> p.toBuilder()
+                        .preco(getFinalPreco(vendaDTO, impostoEMargem, p))
+                        .quantidade(findQuantidade(vendaDTO, p))
+                        .build())
+                .map(ProdutoCalculado::withProdutoCalculado)
+                .toList();
+    }
+
     private static List<String> listaDeCodigosDeProduto(VendaDTO vendaDTO) {
         return vendaDTO.produtos()
                 .stream()
                 .map(Produto::codigo)
                 .toList();
+    }
+
+    private static Integer findQuantidade(VendaDTO vendaDTO, ProdutoEntity p) {
+        return vendaDTO.produtos().stream()
+                .filter(pr -> pr.codigo().equals(p.codigo()))
+                .map(Produto::quantidade)
+                .findFirst()
+                .orElseThrow(() -> new BusinessException("Produtos da lista não estão registrados"));
     }
 
     private static void validaQuantidadeProdutos(VendaDTO vendaDTO, List<ProdutoEntity> produtos) {
@@ -82,18 +101,6 @@ public class VendaService {
                 .quantidade();
     }
 
-    private static List<ProdutoCalculado> getProdutosRecalculados(VendaDTO vendaDTO, List<ProdutoEntity> produtos, Double impostoEMargem) {
-
-        return produtos.stream()
-                .filter(Objects::nonNull)
-                .map(p -> p.toBuilder()
-                        .preco(getFinalPreco(vendaDTO, impostoEMargem, p))
-                        .quantidade(findQuantidade(vendaDTO, p))
-                        .build())
-                .map(ProdutoCalculado::withProdutoCalculado)
-                .toList();
-    }
-
 
 
     private static BigDecimal getFinalPreco(VendaDTO vendaDTO, Double impostoEMargem, ProdutoEntity produtoEntity) {
@@ -101,14 +108,6 @@ public class VendaService {
                 .multiply(BigDecimal.valueOf(impostoEMargem))
                 .add(vendaDTO.custos())
                 .multiply(BigDecimal.valueOf(findQuantidade(vendaDTO, produtoEntity)));
-    }
-
-    private static Integer findQuantidade(VendaDTO vendaDTO, ProdutoEntity p) {
-        return vendaDTO.produtos().stream()
-                .filter(pr -> pr.codigo().equals(p.codigo()))
-                .map(Produto::quantidade)
-                .findFirst()
-                .orElseThrow(() -> new BusinessException("Produtos da lista não estão registrados"));
     }
 
     public VendaEntity buscarVenda(String nroNota) {
