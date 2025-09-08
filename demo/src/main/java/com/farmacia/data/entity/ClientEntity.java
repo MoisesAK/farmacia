@@ -1,10 +1,12 @@
 package com.farmacia.data.entity;
 
 import lombok.Builder;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Builder
+@Document("clientes")
 public record ClientEntity(
-        Long id,
+        String id,
         String cpf,
         String nome,
         String endereco,

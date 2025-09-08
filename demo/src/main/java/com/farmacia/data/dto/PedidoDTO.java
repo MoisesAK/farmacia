@@ -2,11 +2,12 @@ package com.farmacia.data.dto;
 
 import lombok.Builder;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Builder
 public record PedidoDTO(
-        Long id,
-        Long nroPedido,
-        Long idFornecedor,
-        ProductDTO produto
-) {
-}
+        String nroPedido,
+        String idFornecedor,
+        ArrayList<Produto> produto
+){}

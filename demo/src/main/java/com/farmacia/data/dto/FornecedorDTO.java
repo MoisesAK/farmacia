@@ -4,10 +4,9 @@ import lombok.Builder;
 
 @Builder
 public record FornecedorDTO(
-       Long id,
        String nome,
-       String CNPJ,
-       String endereço,
+       String cnpj,
+       String endereco,
        String telefone,
        String eMail
 ) {
