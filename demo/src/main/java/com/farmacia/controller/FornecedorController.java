@@ -2,7 +2,6 @@ package com.farmacia.controller;
 
 import com.farmacia.data.dto.ErroDTO;
 import com.farmacia.data.dto.FornecedorDTO;
-import com.farmacia.data.entity.ClientEntity;
 import com.farmacia.data.entity.FornecedorEntity;
 import com.farmacia.service.FornecedorService;
 import io.swagger.v3.oas.annotations.Operation;

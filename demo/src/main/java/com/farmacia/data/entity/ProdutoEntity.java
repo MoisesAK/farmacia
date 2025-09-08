@@ -1,5 +1,6 @@
 package com.farmacia.data.entity;
 
+import com.farmacia.data.dto.ProdutoDTO;
 import lombok.Builder;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -17,4 +18,13 @@ public record ProdutoEntity(
         String idFornecedor,
         Integer quantidade
 ) {
+    public static ProdutoEntity withProduct(ProdutoDTO produtoDTO) {
+        return ProdutoEntity.builder()
+                .codigo(produtoDTO.codigo())
+                .nome(produtoDTO.nome())
+                .tipo(produtoDTO.tipo())
+                .preco(produtoDTO.preco())
+                .idFornecedor(produtoDTO.idFornecedor())
+                .build();
+    }
 }

@@ -19,13 +19,7 @@ public class FornecedorService {
             throw new BusinessException("Fornecedor ja cadastrado");
         }
 
-        return repository.save(FornecedorEntity.builder()
-                        .nome(fornecedorDTO.nome())
-                        .cnpj(fornecedorDTO.cnpj())
-                        .endereco(fornecedorDTO.endereco())
-                        .telefone(fornecedorDTO.telefone())
-                        .eMail(fornecedorDTO.eMail())
-                .build());
+        return repository.save(FornecedorEntity.withFornecedor(fornecedorDTO));
     }
 
     public FornecedorEntity buscarFornecedor(String cnpj) {

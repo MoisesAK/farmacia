@@ -2,7 +2,6 @@ package com.farmacia.controller;
 
 import com.farmacia.data.dto.ErroDTO;
 import com.farmacia.data.dto.VendaDTO;
-import com.farmacia.data.entity.PedidoEntity;
 import com.farmacia.data.entity.VendaEntity;
 import com.farmacia.service.VendaService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -12,6 +11,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
+import java.util.List;
+
 
 @RestController
 @ControllerAdvice
@@ -39,5 +42,15 @@ public class VendasController {
     @GetMapping("/{nroNota}")
     public VendaEntity buscarVenda(@PathVariable String nroNota) {
         return service.buscarVenda(nroNota);
+    }
+
+    @Operation(summary = "Relatorio venda", description = "Endpoint responsável por buscar todas as vendas em um periodo")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Venda encontrada", content = @Content(mediaType = "application/json", schema = @Schema(implementation = VendaEntity.class)))
+    })
+    @GetMapping()
+    public List<VendaEntity> relatorioDeVendas(@RequestParam LocalDate dataInicio,
+                                         @RequestParam LocalDate dataFim) {
+        return service.relatorioDeVendas(dataInicio, dataFim);
     }
 }

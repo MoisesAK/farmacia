@@ -13,7 +13,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -111,5 +114,10 @@ public class VendaService {
     public VendaEntity buscarVenda(String nroNota) {
         return repository.findByNroNota(nroNota)
                 .orElseThrow(() -> new NotFoundException("Venda não encontrada"));
+    }
+
+
+    public List<VendaEntity> relatorioDeVendas(LocalDate dataInicio, LocalDate dataFim) {
+        return repository.findAll();
     }
 }

@@ -6,6 +6,8 @@ import lombok.Builder;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,7 +19,9 @@ public record VendaEntity(
         String nomeVendedor,
         String nroNota,
         BigDecimal valor,
-        List<ProdutoCalculado> listaProdutos
+        List<ProdutoCalculado> listaProdutos,
+        LocalDate data,
+        LocalTime hora
 ) {
 
     public static VendaEntity buildVendaEntity(BigDecimal total, VendaDTO vendaDTO, List<ProdutoCalculado> produtosCalculados) {
@@ -27,6 +31,8 @@ public record VendaEntity(
                 .cpfCliente(vendaDTO.cpfCliente())
                 .nomeVendedor(vendaDTO.nomeVendedor())
                 .listaProdutos(produtosCalculados)
+                .data(LocalDate.now())
+                .hora(LocalTime.now())
                 .build();
     }
 }

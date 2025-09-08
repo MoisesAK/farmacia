@@ -45,14 +45,10 @@ public class ProdutoService {
             throw new BusinessException("fornecedor não encontrado");
         }
 
-        return repository.save(ProdutoEntity.builder()
-                .codigo(produtoDTO.codigo())
-                .nome(produtoDTO.nome())
-                .tipo(produtoDTO.tipo())
-                .preco(produtoDTO.preco())
-                .idFornecedor(produtoDTO.idFornecedor())
-                .build());
+        return repository.save(ProdutoEntity.withProduct(produtoDTO));
     }
+
+
 
     public void validaProdutos(List<Produto> produtos, String idFornecedor) {
         if (naoExisteProduto(produtos, idFornecedor)) {

@@ -19,12 +19,7 @@ public class ClienteService {
             throw new BusinessException("Cliente já cadastrado");
         }
 
-        return repository.save(ClientEntity.builder()
-                        .cpf(clienteDTO.cpf())
-                        .nome(clienteDTO.nome())
-                        .telefone(clienteDTO.telefone())
-                        .endereco(clienteDTO.endereco())
-                .build());
+        return repository.save(ClientEntity.withCliente(clienteDTO));
     }
 
     public ClientEntity buscaCliente(String cpf) {

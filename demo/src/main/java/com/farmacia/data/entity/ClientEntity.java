@@ -1,5 +1,6 @@
 package com.farmacia.data.entity;
 
+import com.farmacia.data.dto.ClienteDTO;
 import lombok.Builder;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -12,4 +13,13 @@ public record ClientEntity(
         String endereco,
         String telefone
 ) {
+
+    public static ClientEntity withCliente(ClienteDTO cliente){
+        return ClientEntity.builder()
+                .cpf(cliente.cpf())
+                .nome(cliente.nome())
+                .telefone(cliente.telefone())
+                .endereco(cliente.endereco())
+                .build();
+    }
 }
